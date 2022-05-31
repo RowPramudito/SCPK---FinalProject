@@ -95,7 +95,7 @@ c1 = zeros(21,1);
 c2 = zeros(21,1);
 c3 = zeros(21,1);
 
-for i=1:21,
+for i=1:21
     if dataset(i,3) == 0
         c1(i,1) = dataset(1,1) / dataset(i,1);
         c2(i,1) = dataset(1,2) / dataset(i,2);
@@ -105,7 +105,7 @@ for i=1:21,
         c2(i,1) = dataset(1,2) / dataset(i,2);
         c3(i,1) = dataset(1,3) / dataset(i,3); 
     end
-end;
+end
 
 c1_nor = calc_norm(c1);
 c2_nor = calc_norm(c2);
@@ -115,25 +115,25 @@ c12 = str2double(get(handles.c12,'string'));
 c13 = str2double(get(handles.c13,'string'));
 c23 = str2double(get(handles.c23,'string'));
 
-MPB = [1, c12, c13;
+MPBk = [1, c12, c13;
        1/c12, 1 ,c23;
        1/c13, 1/c23, 1];
    
    
-MPBw = calc_norm(MPB);
-[m n] = size(MPBw);
-for i=1:m,
+MPBw = calc_norm(MPBk);
+[m, n] = size(MPBw);
+for i=1:m
     sumRow = 0;
-    for j=1:n,
+    for j=1:n
         sumRow = sumRow + MPBw(i,j);
-    end;
+    end
     V(i) = (sumRow);
-end;
+end
 MPBw = transpose(V)/m;
 
 wM = [c1_nor c2_nor c3_nor];
 MC_scores = wM * MPBw;
-[maxValue maxIndex] = max(MC_scores);
+[maxValue, maxIndex] = max(MC_scores);
 
 set(handles.resOutput,'string',dataName(maxIndex));
 set(handles.resValue,'string',maxValue);
